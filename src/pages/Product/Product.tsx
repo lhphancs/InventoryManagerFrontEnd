@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const Home = () => {
+export function Product() {
     return <div>
-        aaa
+
     </div>;
 }

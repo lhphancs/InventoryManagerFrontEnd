@@ -1,14 +1,22 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import { Home } from './pages/Home';
+import NavTabs from './NavTabs';
+import { PathProducts, PathShelves } from './paths';
+import { Product } from './pages/Product/Product';
+import { Shelf } from './pages/Shelf/Shelf';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/"><Home /></Route>
-      </Switch>
-    </Router>
+    <div>
+      <NavTabs />
+      <Router>
+        <Switch>
+          <Route path={PathProducts}><Product /></Route>
+          <Route path={PathShelves}><Shelf /></Route>
+          <Route path="/"><Product /></Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
