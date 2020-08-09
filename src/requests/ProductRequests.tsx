@@ -1,6 +1,6 @@
 export const getAllProducts = async () : Promise<Response> => {
-    const url = `${process.env.INVENTORY_MANAGER_API_URL}`;
-    console.log('aaa', url);
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}`;
+
     const response = await fetch(url, {
         method: 'GET'
     });

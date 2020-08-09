@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { getAllProducts } from '../../requests/ProductRequests';
+import { clearGlobalError, setGlobalError } from '../../redux/reducer/globalErrorReducer';
+import { connect } from 'react-redux';
 
-export function Product() {
+function Product(props: any) {
+    console.log("ZZZZ", props);
     const [upc, setUpc] = React.useState('');
 
     useEffect( () => {
@@ -10,10 +13,10 @@ export function Product() {
             
             if (response.status === 200) {
                 const body = response.json();
-                console.log(body);
+                props.clearGlobalError();
             }
             else {
-                
+                props.setGlobalError("AAA");
             }
         };
         setProducts();
@@ -25,3 +28,13 @@ export function Product() {
         aaaaaaa
     </div>;
 }
+
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        clearGlobalError: () => dispatch(clearGlobalError),
+        setGlobalError: (message: string) => dispatch(setGlobalError(message))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Product);
