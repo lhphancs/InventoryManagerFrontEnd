@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import globalErrorReducer from './globalErrorReducer';
+import globalMessagesReducer from './globalMessagesReducer';
 
 const rootReducer = combineReducers({
-    globalError: globalErrorReducer
+    globalMessages: globalMessagesReducer
 });
 
 export default rootReducer;

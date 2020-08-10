@@ -1,27 +1,32 @@
 import React, { useEffect } from 'react';
 import { getAllProducts } from '../../requests/ProductRequests';
-import { clearGlobalError, setGlobalError } from '../../redux/reducer/globalErrorReducer';
+import { clearAllGlobalMessages, clearAndAddErrorMessages } from '../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 
-function Product(props: any) {
-    console.log("ZZZZ", props);
+interface IProductProps {
+    clearAllGlobalMessages: () => void;
+    clearAndAddErrorMessages: (message: string) => void;
+}
+
+
+function Product(props: IProductProps) {
     const [upc, setUpc] = React.useState('');
 
     useEffect( () => {
         const setProducts = async () => {
             const response = await getAllProducts();
             
+            const body2 = await response.json();
+            console.log(body2);
             if (response.status === 200) {
                 const body = response.json();
-                props.clearGlobalError();
+                props.clearAllGlobalMessages();
             }
             else {
-                props.setGlobalError("AAA");
+                props.clearAndAddErrorMessages("aaa");
             }
         };
         setProducts();
-        console.log('ccc', process.env.INVENTORY_MANAGER_API_URL)
-        
     } , []);
 
     return <div>
@@ -32,8 +37,8 @@ function Product(props: any) {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        clearGlobalError: () => dispatch(clearGlobalError),
-        setGlobalError: (message: string) => dispatch(setGlobalError(message))
+        clearAllGlobalMessages: () => dispatch(clearAllGlobalMessages),
+        clearAndAddErrorMessages: (message: string) => dispatch(clearAndAddErrorMessages(message))
     };
 };
 
