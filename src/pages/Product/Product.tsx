@@ -10,20 +10,20 @@ interface IProductProps {
 
 
 function Product(props: IProductProps) {
+    props.clearAllGlobalMessages();
+
     const [upc, setUpc] = React.useState('');
 
     useEffect( () => {
         const setProducts = async () => {
             const response = await getAllProducts();
+            const body = await response.json();
             
-            const body2 = await response.json();
-            console.log(body2);
             if (response.status === 200) {
-                const body = response.json();
-                props.clearAllGlobalMessages();
+                console.log(body);
             }
             else {
-                props.clearAndAddErrorMessages("aaa");
+                props.clearAndAddErrorMessages(body.message);
             }
         };
         setProducts();

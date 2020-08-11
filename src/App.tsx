@@ -16,11 +16,11 @@ interface IAppProps {
 
 const globalMessages = (successMessages: string[], errorMessages: string[]) => {
     return <div>
-      {successMessages.length > 0 && <Box bgcolor='success.main' style={{padding: 5, margin: 5}}>
+      {successMessages.length > 0 && <Box bgcolor='success.light' style={{padding: 5, margin: 5}}>
         {successMessages.map((x: string, index: number) => <div key={`success-msg-${index}`}>{x}</div>)}
       </Box>}
 
-      {errorMessages.length > 0 && <Box bgcolor='error.main' style={{padding: 5, margin: 5}}>
+      {errorMessages.length > 0 && <Box bgcolor='error.light' style={{padding: 5, margin: 5}}>
         {errorMessages.map( (x: string, index: number) => <div key={`error-msg-${index}`}>{x}</div>)}
       </Box>}
     </div>;
