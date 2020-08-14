@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import NavTabs from './NavTabs';
 import { PathProducts, PathShelves } from './paths';
 import { Shelf } from './pages/Shelf/Shelf';
@@ -30,17 +30,18 @@ const globalMessages = (successMessages: string[], errorMessages: string[]) => {
 function App(props: IAppProps) {
   return (
     <div>
-      <NavTabs />
+      <BrowserRouter>
+        <NavTabs />
 
-      {globalMessages(props.globalMessages.successMessages, props.globalMessages.errorMessages)}
+        {globalMessages(props.globalMessages.successMessages, props.globalMessages.errorMessages)}
 
-      <Router>
-        <Switch>
-          <Route path={PathProducts}><Product /></Route>
-          <Route path={PathShelves}><Shelf /></Route>
-          <Route path="/"><Product /></Route>
-        </Switch>
-      </Router>
+          <Switch>
+            <Route path={PathProducts}><Product /></Route>
+            <Route path={PathShelves}><Shelf /></Route>
+            <Route path="/"><Product /></Route>
+          </Switch>
+      </BrowserRouter>
+      
     </div>
   );
 }
