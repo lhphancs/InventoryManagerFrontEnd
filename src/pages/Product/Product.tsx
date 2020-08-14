@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { getAllProducts } from '../../requests/ProductRequests';
 import { clearAllGlobalMessages, clearAndAddErrorMessages } from '../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
+import { IProduct } from '../../interfaces/IProduct';
 
 interface IProductProps {
     clearAllGlobalMessages: () => void;
@@ -12,21 +13,20 @@ interface IProductProps {
 function Product(props: IProductProps) {
     props.clearAllGlobalMessages();
 
-    const [upc, setUpc] = React.useState('');
-
+    const [products, setProducts] = React.useState<IProduct[]>([]);
     useEffect( () => {
-        const setProducts = async () => {
+        const initializeProducts = async () => {
             const response = await getAllProducts();
             const body = await response.json();
-            
             if (response.status === 200) {
                 console.log(body);
+                setProducts(body);
             }
             else {
                 props.clearAndAddErrorMessages(body.message);
             }
         };
-        setProducts();
+        initializeProducts();
     } , []);
 
     return <div>
