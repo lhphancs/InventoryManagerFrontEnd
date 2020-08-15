@@ -1,10 +1,15 @@
 import React from 'react';
-import { makeStyles, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
+import { makeStyles, Drawer, Divider, ListItem, ListItemIcon, ListItemText, ListItemAvatar, Collapse } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import HistoryIcon from '@material-ui/icons/History';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  toolbar: theme.mixins.toolbar,
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
@@ -15,35 +20,56 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-  }
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
-function renderConfigurationLinks() {
-  return <List>
-    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-      <ListItem button key={text}>
-        <ListItemIcon><ThreeDRotation/></ListItemIcon>
-        <ListItemText primary={text} />
-      </ListItem>
-    ))}
-  </List>;
+interface IItemLinkInfo {
+  text: string;
+  href: string;
+  icon?: React.ReactNode;
 }
 
-function renderSellers() {
-  return <List>
-    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-      <ListItem button key={text}>
-        
+function renderCollapsibleList(open: boolean, text: string, onClick: () => void, icon?: React.ReactNode) {
+  return <ListItem button onClick={onClick}>
+        <ListItemIcon>
+          {icon}
+        </ListItemIcon>
         <ListItemText primary={text} />
-      </ListItem>
-    ))}
-  </List>;
+        {open ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>;
 }
 
+function renderListItemLink(text: string, href: string, component?: any, className?: string) {
+  return <ListItem button component="a" href={href} key={`${text}-${href}`}  className={className}>
+    <ListItemIcon>{component}</ListItemIcon>
+    <ListItemText primary={text} />
+  </ListItem>;
+}
+
+function renderItemLinkInfos(itemLinkInfos: IItemLinkInfo[], className?: string) {
+  return itemLinkInfos.map((info) => renderListItemLink(info.text, info.href, info.icon, className));
+}
+
+const configurationItemLinkInfos = [
+    {text: "Products", href:"/products" },
+    {text: "Wholesalers", href:"/wholesalers"},
+    {text: "Shelves", href:"/shelves"},
+];
+
+const reportItemLinkInfos = [
+    {text: "Audit", href:"/report/audit", icon: <HistoryIcon />},
+];
 export default function SideNavigation() {
   const classes = useStyles();
 
+  const [configurationOpen, setConfigurationOpen] = React.useState(true);
+  const [reportOpen, setReportOpen] = React.useState(true);
+
   return (
+    <div>
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -52,11 +78,24 @@ export default function SideNavigation() {
         }}
         anchor="left"
       >
+        <div className={classes.toolbar}>
+
+        </div>
         <Divider />
-        {renderConfigurationLinks()}
         
+        {renderCollapsibleList(configurationOpen, "Configurations", () => setConfigurationOpen(!configurationOpen), <SettingsIcon /> )}
+        <Collapse in={configurationOpen} timeout="auto" unmountOnExit>
+          {renderItemLinkInfos(configurationItemLinkInfos, classes.nested)}
+        </Collapse>
+
         <Divider />
-        {renderSellers()}
+
+        {renderCollapsibleList(reportOpen, "Reports", () => setReportOpen(!reportOpen), <AssessmentIcon />)}
+        <Collapse in={reportOpen} timeout="auto" unmountOnExit>
+          {renderItemLinkInfos(reportItemLinkInfos, classes.nested)}
+        </Collapse>
+        <Divider />
       </Drawer>
+    </div>
   );
 }
