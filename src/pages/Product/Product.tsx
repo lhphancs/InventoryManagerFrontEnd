@@ -9,7 +9,6 @@ interface IProductProps {
     clearAndAddErrorMessages: (message: string) => void;
 }
 
-
 function Product(props: IProductProps) {
     props.clearAllGlobalMessages();
 
@@ -33,7 +32,6 @@ function Product(props: IProductProps) {
         aaaaaaa
     </div>;
 }
-
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
