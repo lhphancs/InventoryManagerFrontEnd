@@ -1,11 +1,12 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { PathProducts, PathShelves } from './paths';
+import { PathProduct, PathShelves, PathProductForm } from './paths';
 import { Shelf } from './domains/Configurations/Shelf/Shelf';
 import Product from './domains/Configurations/Product/Product';
 import { makeStyles } from '@material-ui/core';
 import SideNavigation from './SideNavigation';
 import GlobalMessages from './GlobalMessages';
+import ProductForm from './domains/Configurations/Product/ProductForm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,9 @@ export default function App() {
           <GlobalMessages />
 
           <Switch>
-            <Route path={PathProducts}><Product /></Route>
+            <Route path={PathProductForm}><ProductForm /></Route>
+            <Route path={PathProduct}><Product /></Route>
+            
             <Route path={PathShelves}><Shelf /></Route>
             <Route path="/"><Product /></Route>
           </Switch>
