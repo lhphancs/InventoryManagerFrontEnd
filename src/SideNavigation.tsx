@@ -1,10 +1,7 @@
 import React from 'react';
-import { makeStyles, Drawer, Divider, ListItem, ListItemIcon, ListItemText, ListItemAvatar, Collapse } from '@material-ui/core';
+import { makeStyles, Drawer, Divider, ListItem, ListItemIcon, ListItemText, ListItemAvatar, Collapse, Icon } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import HistoryIcon from '@material-ui/icons/History';
-import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 240;
 
@@ -60,7 +57,7 @@ const configurationItemLinkInfos = [
 ];
 
 const reportItemLinkInfos = [
-    {text: "Audit", href:"/report/audit", icon: <HistoryIcon />},
+    {text: "Audit", href:"/report/audit", icon: <Icon>history</Icon>},
 ];
 export default function SideNavigation() {
   const classes = useStyles();
@@ -83,14 +80,14 @@ export default function SideNavigation() {
         </div>
         <Divider />
         
-        {renderCollapsibleList(configurationOpen, "Configurations", () => setConfigurationOpen(!configurationOpen), <SettingsIcon /> )}
+        {renderCollapsibleList(configurationOpen, "Configurations", () => setConfigurationOpen(!configurationOpen), <Icon>settings</Icon> )}
         <Collapse in={configurationOpen} timeout="auto" unmountOnExit>
           {renderItemLinkInfos(configurationItemLinkInfos, classes.nested)}
         </Collapse>
 
         <Divider />
 
-        {renderCollapsibleList(reportOpen, "Reports", () => setReportOpen(!reportOpen), <AssessmentIcon />)}
+        {renderCollapsibleList(reportOpen, "Reports", () => setReportOpen(!reportOpen), <Icon>assessment</Icon>)}
         <Collapse in={reportOpen} timeout="auto" unmountOnExit>
           {renderItemLinkInfos(reportItemLinkInfos, classes.nested)}
         </Collapse>

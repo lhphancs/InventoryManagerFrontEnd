@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { PathProducts, PathShelves } from './paths';
-import { Shelf } from './pages/Shelf/Shelf';
-import Product from './pages/Product/Product';
+import { Shelf } from './domains/Configurations/Shelf/Shelf';
+import Product from './domains/Configurations/Product/Product';
 import { makeStyles } from '@material-ui/core';
 import SideNavigation from './SideNavigation';
 import GlobalMessages from './GlobalMessages';
