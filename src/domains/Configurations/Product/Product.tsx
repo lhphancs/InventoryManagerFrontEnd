@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getAllProducts } from '../../../requests/ProductRequests';
+import { getAllProducts, updateProductInfo } from '../../../requests/ProductRequests';
 import { clearAllGlobalMessages, clearAndAddErrorMessages } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 import { IProduct } from '../../../interfaces/IProduct';
@@ -17,9 +17,9 @@ function Product(props: IProductProps) {
     useEffect( () => {
         const initializeProducts = async () => {
             const response = await getAllProducts();
+            console.log("aaa", response);
             const body = await response.json();
             if (response.status === 200) {
-                console.log(body);
                 setProducts(body);
             }
             else {
@@ -30,17 +30,14 @@ function Product(props: IProductProps) {
     } , []);
 
     const columns: Column<object>[] = [
-        { title: 'Name', field: 'name' },
-        { title: 'Surname', field: 'surname', initialEditValue: 'initial edit value' },
-        { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-        {
-        title: 'Birth Place',
-        field: 'birthCity',
-        lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-        },
+        { title: 'UPC', field: 'productInfo.upc' },
+        { title: 'Brand', field: 'productInfo.brand' },
+        { title: 'Name', field: 'productInfo.name' },
+        { title: 'Description', field: 'productInfo.description' },
+        { title: 'Expiration Location', field: 'productInfo.expirationLocation' },
+        { title: 'Weight (oz)', field: 'productInfo.ounceWeight' },
     ];
 
-    console.log(products);
     return <MaterialTable
         data={products}
         columns={columns}
@@ -54,17 +51,25 @@ function Product(props: IProductProps) {
                         resolve();
                     }, 1000);
                 }),
-            onBulkUpdate: changes => 
+            onRowUpdate: (newData: any, oldData: any) =>
                 new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        /* setData([...data, newData]); */
+                    setTimeout(async () => {
+                        console.log(newData);
+                        const response = await updateProductInfo(newData);
+                        const body = await response.json();
+                        if (response.status === 200) {
+                            const newProducts = [...products];
+                            newProducts[products.indexOf(oldData)] = body;
+                            setProducts(newProducts);
+                            resolve();
+                        }
+                        else {
+                            props.clearAndAddErrorMessages(body.message);
+                            reject();
+                        }
 
                         resolve();
                     }, 1000);
-                }),
-            onRowUpdate: (newData, oldData) =>
-                new Promise((resolve, reject) => {
-                    
                 }),
             onRowDelete: oldData =>
                 new Promise((resolve, reject) => {

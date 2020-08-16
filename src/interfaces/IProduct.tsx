@@ -1,22 +1,22 @@
-export interface IProduct{
-    Id: string;
-    Upc: string;
-    ProductInfo: IProductInfo;
-    ProductPreparationInfo: IProductPreparationInfo;
-    Quantity: number;
-    ShelfLocationId: string
+export interface IProduct {
+    id: string;
+    productInfo: IProductInfo;
+    productPreparationInfo: IProductPreparationInfo;
+    quantity: number;
+    shelfLocationId: string
 }
 
 interface IProductInfo {
-    Brand: string;
-    Name: string;
-    Description: string;
-    ExpirationLocation: string;
-    OunceWeight: number;
+    upc: string;
+    brand: string;
+    name: string;
+    description: string;
+    expirationLocation: string;
+    ounceWeight: number;
 }
 
 interface IProductPreparationInfo {
-    RequiresPadding: boolean;
-    RequiresBubbleWrap: boolean;
-    RequiresBox: boolean;
+    requiresPadding: boolean;
+    requiresBubbleWrap: boolean;
+    requiresBox: boolean;
 }
