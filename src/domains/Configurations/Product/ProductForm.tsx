@@ -1,11 +1,14 @@
 import React from 'react';
-import { clearAllGlobalMessages, clearAndAddErrorMessages } from '../../../redux/reducer/globalMessagesReducer';
+import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
-import { TextField, makeStyles, InputAdornment, FormGroup, FormControlLabel, Checkbox, FormControl } from '@material-ui/core';
+import { TextField, makeStyles, InputAdornment, FormControlLabel, Checkbox, FormControl, Button, CircularProgress } from '@material-ui/core';
+import { IProductPreparationInfo, IProductInfo } from '../../../interfaces/IProduct';
+import { addProduct } from '../../../requests/ProductRequests';
 
 interface IProductFormProps {
     clearAllGlobalMessages: () => void;
-    clearAndAddErrorMessages: (message: string) => void;
+    clearAndAddSuccessMessage: (message: string) => void;
+    clearAndAddErrorMessage: (message: string) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 function ProductForm(props: IProductFormProps) {
     const classes = useStyles();
 
-    const [productInfo, setProductInfo] = React.useState({
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [productInfo, setProductInfo] = React.useState<IProductInfo>({
       upc: '',
       brand: '',
       name: '',
@@ -29,9 +33,9 @@ function ProductForm(props: IProductFormProps) {
       ounceWeight: 0
     });
 
-    const [productPreparationInfo, setProductPreparationInfo] = React.useState({
+    const [productPreparationInfo, setProductPreparationInfo] = React.useState<IProductPreparationInfo>({
       requiresPadding: false,
-      requiresBubblewrap: false,
+      requiresBubbleWrap: false,
       requiresBox: false
     });
 
@@ -44,7 +48,22 @@ function ProductForm(props: IProductFormProps) {
       setProductPreparationInfo({ ...productPreparationInfo, [event.target.name]: event.target.checked });
     };
 
-    return <form className={classes.root}>
+    const handleSave = async () => {
+      setIsLoading(true);
+
+
+      const response = await addProduct(productInfo, productPreparationInfo);
+      const body = await response.json();
+      if (response.status === 200) {
+          props.clearAndAddSuccessMessage("Product added successfully");
+      }
+      else {
+          props.clearAndAddErrorMessage(body.message);
+      }
+      setIsLoading(false);
+    }
+
+    const form = <form className={classes.root}>
       <div>
         <div>
           <TextField label="UPC" required onChange={handleProductInfoChange} name="upc" />
@@ -67,21 +86,24 @@ function ProductForm(props: IProductFormProps) {
             label="Padding"
           />
           <FormControlLabel
-            control={<Checkbox checked={productPreparationInfo.requiresBubblewrap} onChange={handleProductPreparationInfoChange} name="requiresBubblewrap" />}
+            control={<Checkbox checked={productPreparationInfo.requiresBubbleWrap} onChange={handleProductPreparationInfoChange} name="requiresBubblewrap" />}
             label="Bubblewrap"
           />
           <FormControlLabel
             control={<Checkbox checked={productPreparationInfo.requiresBox} onChange={handleProductPreparationInfoChange} name="requiresBox" />}
             label="Box"
           />
+          <Button variant="contained" color='primary' onClick={handleSave}>Click me</Button>
         </FormControl>
     </form>;
+    return isLoading ? <CircularProgress /> : form;
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        clearAllGlobalMessages: () => dispatch(clearAllGlobalMessages),
-        clearAndAddErrorMessages: (message: string) => dispatch(clearAndAddErrorMessages(message))
+        clearAllGlobalMessages: () => dispatch(clearAllGlobalMessage),
+        clearAndAddSuccessMessage: (message: string) => dispatch(clearAndAddSuccessMessage(message)),
+        clearAndAddErrorMessage: (message: string) => dispatch(clearAndAddErrorMessage(message))
     };
 };
 

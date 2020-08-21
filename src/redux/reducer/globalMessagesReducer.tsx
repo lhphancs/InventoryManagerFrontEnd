@@ -14,21 +14,21 @@ const globalMessagesSlice = createSlice({
         addSuccessMessage(state, action: IReduxAction) {
             state.successMessages = [...state.successMessages, action.payload];
         },
-        clearAndAddSuccessMessages(state, action: IReduxAction) {
+        clearAndAddSuccessMessage(state, action: IReduxAction) {
             state.successMessages = [action.payload];
             state.errorMessages = [];
         },
-        clearAndAddErrorMessages(state, action: IReduxAction) {
+        clearAndAddErrorMessage(state, action: IReduxAction) {
             state.errorMessages = [action.payload];
             state.successMessages = [];
         },
-        clearAllGlobalMessages(state, _: IReduxAction) {
+        clearAllGlobalMessage(state, _: IReduxAction) {
             state.errorMessages = [];
             state.successMessages = [];
         }
     }
 });
 
-export const { addErrorMessage, addSuccessMessage, clearAndAddSuccessMessages, clearAndAddErrorMessages, clearAllGlobalMessages } = globalMessagesSlice.actions;
+export const { addErrorMessage, addSuccessMessage, clearAndAddSuccessMessage: clearAndAddSuccessMessage, clearAndAddErrorMessage: clearAndAddErrorMessage, clearAllGlobalMessage: clearAllGlobalMessage } = globalMessagesSlice.actions;
 
 export default globalMessagesSlice.reducer;

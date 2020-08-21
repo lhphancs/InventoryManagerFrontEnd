@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { getAllProducts } from '../../../requests/ProductRequests';
-import { clearAllGlobalMessages, clearAndAddErrorMessages } from '../../../redux/reducer/globalMessagesReducer';
+import { clearAllGlobalMessage, clearAndAddErrorMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 import { IProduct } from '../../../interfaces/IProduct';
 import MaterialTable, { Column } from 'material-table';
@@ -50,8 +50,8 @@ function Product(props: IProductProps) {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        clearAllGlobalMessages: () => dispatch(clearAllGlobalMessages),
-        clearAndAddErrorMessages: (message: string) => dispatch(clearAndAddErrorMessages(message))
+        clearAllGlobalMessages: () => dispatch(clearAllGlobalMessage),
+        clearAndAddErrorMessages: (message: string) => dispatch(clearAndAddErrorMessage(message))
     };
 };
 

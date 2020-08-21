@@ -6,7 +6,7 @@ export interface IProduct {
     shelfLocationId: string
 }
 
-interface IProductInfo {
+export interface IProductInfo {
     upc: string;
     brand: string;
     name: string;
@@ -15,7 +15,7 @@ interface IProductInfo {
     ounceWeight: number;
 }
 
-interface IProductPreparationInfo {
+export interface IProductPreparationInfo {
     requiresPadding: boolean;
     requiresBubbleWrap: boolean;
     requiresBox: boolean;
