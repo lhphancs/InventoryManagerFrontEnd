@@ -29,6 +29,6 @@ const globalMessagesSlice = createSlice({
     }
 });
 
-export const { addErrorMessage, addSuccessMessage, clearAndAddSuccessMessage: clearAndAddSuccessMessage, clearAndAddErrorMessage: clearAndAddErrorMessage, clearAllGlobalMessage: clearAllGlobalMessage } = globalMessagesSlice.actions;
+export const { addErrorMessage, clearAndAddSuccessMessage, clearAndAddErrorMessage, clearAllGlobalMessage } = globalMessagesSlice.actions;
 
 export default globalMessagesSlice.reducer;

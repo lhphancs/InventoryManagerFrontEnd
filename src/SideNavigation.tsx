@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Drawer, Divider, ListItem, ListItemIcon, ListItemText, ListItemAvatar, Collapse, Icon } from '@material-ui/core';
+import { makeStyles, Drawer, Divider, ListItem, ListItemIcon, ListItemText, Collapse, Icon } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 

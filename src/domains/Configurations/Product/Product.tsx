@@ -8,7 +8,7 @@ import { PathProduct } from '../../../paths';
 
 interface IProductProps {
     clearAllGlobalMessages: () => void;
-    clearAndAddErrorMessages: (message: string) => void;
+    clearAndAddErrorMessage: (message: string) => void;
 }
 
 function Product(props: IProductProps) {
@@ -25,11 +25,13 @@ function Product(props: IProductProps) {
                 setProducts(body);
             }
             else {
-                props.clearAndAddErrorMessages(body.message);
+                props.clearAndAddErrorMessage(body.message);
             }
             setIsLoading(false);
         };
         initializeProducts();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     } , []);
 
     const columns: Column<object>[] = [
@@ -51,7 +53,7 @@ function Product(props: IProductProps) {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         clearAllGlobalMessages: () => dispatch(clearAllGlobalMessage),
-        clearAndAddErrorMessages: (message: string) => dispatch(clearAndAddErrorMessage(message))
+        clearAndAddErrorMessage: (message: string) => dispatch(clearAndAddErrorMessage(message))
     };
 };
 
