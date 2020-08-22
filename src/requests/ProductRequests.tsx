@@ -61,7 +61,7 @@ export const updateProductInfo = async (id: number, productInfo: IProductInfo) :
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify(productInfo)
     });
     const body = await response.json();
