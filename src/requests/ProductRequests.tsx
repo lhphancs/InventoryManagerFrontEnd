@@ -18,7 +18,7 @@ export const getProduct = async (id: number) : Promise<Response> => {
     return response;
 }
 
-export const addProduct = async (productInfo: IProductInfo) : Promise<Response> => {
+export const addProduct = async (productInfo: IProductInfo, quantity: number) : Promise<Response> => {
     const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/product/`;
 
     const response = await fetch(url, {
@@ -28,7 +28,8 @@ export const addProduct = async (productInfo: IProductInfo) : Promise<Response> 
         method: 'POST',
         body: JSON.stringify(
             {
-                productInfo: productInfo
+                productInfo: productInfo,
+                quantity: quantity
             }
         )
     });

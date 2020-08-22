@@ -1,5 +1,5 @@
 export interface IProduct {
-    id: string;
+    id: number;
     productInfo: IProductInfo;
     quantity: number;
     shelfLocationId: string

@@ -4,7 +4,8 @@ import { clearAllGlobalMessage, clearAndAddErrorMessage } from '../../../redux/r
 import { connect } from 'react-redux';
 import { IProduct } from '../../../interfaces/IProduct';
 import MaterialTable, { Column } from 'material-table';
-import { PathProduct } from '../../../paths';
+import { PathProduct, PathProductForm } from '../../../paths';
+import { useHistory } from "react-router-dom";
 
 interface IProductProps {
     clearAllGlobalMessages: () => void;
@@ -13,6 +14,8 @@ interface IProductProps {
 
 function Product(props: IProductProps) {
     props.clearAllGlobalMessages();
+
+    const history = useHistory();
 
     const [products, setProducts] = React.useState<IProduct[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -47,6 +50,14 @@ function Product(props: IProductProps) {
         data={products}
         columns={columns}
         isLoading={isLoading}
+        actions={[
+        {
+          icon: 'add',
+          tooltip: 'Add User',
+          isFreeAction: true,
+          onClick: (_) => history.push(`${PathProduct}/new`)
+        }
+      ]}
     />;
 }
 
