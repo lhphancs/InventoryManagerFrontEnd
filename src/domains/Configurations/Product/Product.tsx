@@ -4,7 +4,7 @@ import { clearAllGlobalMessage, clearAndAddErrorMessage } from '../../../redux/r
 import { connect } from 'react-redux';
 import { IProduct } from '../../../interfaces/IProduct';
 import MaterialTable, { Column } from 'material-table';
-import { PathProduct, PathProductForm } from '../../../paths';
+import { PathProduct } from '../../../paths';
 import { useHistory } from "react-router-dom";
 
 interface IProductProps {
@@ -22,13 +22,12 @@ function Product(props: IProductProps) {
     useEffect( () => {
         const initializeProducts = async () => {
             setIsLoading(true);
-            const response = await getAllProducts();
-            const body = await response.json();
-            if (response.status === 200) {
-                setProducts(body);
+            try {
+                const products = await getAllProducts();
+                setProducts(products);
             }
-            else {
-                props.clearAndAddErrorMessage(body.message);
+            catch (e) {
+                props.clearAndAddErrorMessage(e.message);
             }
             setIsLoading(false);
         };

@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 import { TextField, makeStyles, InputAdornment, FormControlLabel, Checkbox, FormControl, Button, CircularProgress } from '@material-ui/core';
-import { IProductInfo } from '../../../interfaces/IProduct';
+import { IProductInfo, IProduct } from '../../../interfaces/IProduct';
 import { addProduct, getProduct, updateProductInfo } from '../../../requests/ProductRequests';
 import { useParams, useHistory } from 'react-router';
 import { PathProduct } from '../../../paths';
-
 
 interface IProductFormProps {
     clearAllGlobalMessages: () => void;
@@ -23,16 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProductForm(props: IProductFormProps) {
-  const history = useHistory();
-  let { id } = useParams();
-  props.clearAllGlobalMessages();
-
-  const classes = useStyles();
-
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [productId, setProductId] = React.useState<number | undefined>(undefined);
-  const [productInfo, setProductInfo] = React.useState<IProductInfo>({
+const newProductInfo = {
     upc: '',
     brand: '',
     name: '',
@@ -42,7 +32,19 @@ function ProductForm(props: IProductFormProps) {
     requiresBox: false,
     requiresBubbleWrap: false,
     requiresPadding: false
-  });
+  }
+
+function ProductForm(props: IProductFormProps) {
+  const history = useHistory();
+  let { id } = useParams();
+  props.clearAllGlobalMessages();
+
+  const classes = useStyles();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [productId, setProductId] = React.useState<number | undefined>(undefined);
+  const [productInfo, setProductInfo] = React.useState<IProductInfo>(newProductInfo);
+  const [failedToLoadProduct, setFailedToLoadProduct] = React.useState<boolean>(false);
 
   useEffect( () => {
       const initializeProduct = async () => {
@@ -50,14 +52,14 @@ function ProductForm(props: IProductFormProps) {
           return;
         }
         setIsLoading(true);
-        const response = await getProduct(parseInt(id));
-        const body = await response.json();
-        if (response.status === 200) {
-          setProductId(body.id);
-          setProductInfo(body.productInfo);
+        try {
+          const product = await getProduct(parseInt(id));
+          setProductId(product.id);
+          setProductInfo(product.productInfo);
         }
-        else {
-            props.clearAndAddErrorMessage(body.message);
+        catch (e) {
+          props.clearAndAddErrorMessage(e.message);
+          setFailedToLoadProduct(true);
         }
         setIsLoading(false);
       };
@@ -76,17 +78,16 @@ function ProductForm(props: IProductFormProps) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    const response = productId
-                      ? await updateProductInfo(productId!, productInfo)
-                      : await addProduct(productInfo, 0)
+    var product: IProduct | undefined;
+    try {
+      product = productId
+                  ? await updateProductInfo(productId!, productInfo)
+                  : await addProduct(productInfo, 0)
 
-    const body = await response.json();
-    if (response.status === 200) {
-      history.push(`${PathProduct}/${body.id}`);
       props.clearAndAddSuccessMessage("Product saved successfully");
-    }
-    else {
-        props.clearAndAddErrorMessage(body.message);
+      history.push(`${PathProduct}/${product.id}`);
+    } catch (e) {
+      props.clearAndAddErrorMessage(e.message);
     }
     setIsLoading(false);
   }
@@ -124,7 +125,10 @@ function ProductForm(props: IProductFormProps) {
         <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
       </FormControl>
   </form>;
-  return isLoading ? <CircularProgress /> : form;
+
+  return isLoading ? <CircularProgress /> 
+                    : failedToLoadProduct ? null 
+                    : form;
 }
 
 const mapDispatchToProps = (dispatch: any) => {
