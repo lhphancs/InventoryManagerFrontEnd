@@ -100,7 +100,7 @@ function ProductForm(props: IProductFormProps) {
         <TextField label="Name" required value={productInfo.name} name="name" onChange={handleProductInfoChange} />
       </div>
       <div>
-        <TextField label="Description" name="description" value={productInfo.description} onChange={handleProductInfoChange} />
+        <TextField label="Description" value={productInfo.description} name="description" onChange={handleProductInfoChange} />
         <TextField label="Expiration Location" value={productInfo.expirationLocation} name="expirationLocation" onChange={handleProductInfoChange} />
         <TextField label="Weight" type="number" value={productInfo.ounceWeight} name="ounceWeight" onChange={handleProductInfoChange} 
           InputProps={{

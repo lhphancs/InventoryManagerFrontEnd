@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles, Drawer, Divider, ListItem, ListItemIcon, ListItemText, Collapse, Icon } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { PathProduct, PathWholesaler, PathShelf } from './paths';
 
 const drawerWidth = 240;
 
@@ -51,9 +52,9 @@ function renderItemLinkInfos(itemLinkInfos: IItemLinkInfo[], className?: string)
 }
 
 const configurationItemLinkInfos = [
-    {text: "Products", href:"/products" },
-    {text: "Wholesalers", href:"/wholesalers"},
-    {text: "Shelves", href:"/shelves"},
+    {text: "Products", href: PathProduct },
+    {text: "Wholesalers", href: PathWholesaler },
+    {text: "Shelves", href: PathShelf },
 ];
 
 const reportItemLinkInfos = [

@@ -1,22 +1,7 @@
-import { IProductInfo, IProduct } from "../interfaces/IProduct";
+import { IWholesalerInfo, IWholesaler } from "../interfaces/IWholesaler";
 
-export const getAllProducts = async () : Promise<IProduct[]> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/product`;
-
-    const response = await fetch(url, {
-        method: 'GET'
-    });
-    const body = await response.json();
-    if (response.status === 200) {
-        return body;
-    }
-    else {
-        throw body;
-    }
-}
-
-export const getProduct = async (id: number) : Promise<IProduct> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/product/${id}`;
+export const getAllWholesalers = async () : Promise<IWholesaler[]> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler`;
 
     const response = await fetch(url, {
         method: 'GET'
@@ -30,20 +15,30 @@ export const getProduct = async (id: number) : Promise<IProduct> => {
     }
 }
 
-export const addProduct = async (productInfo: IProductInfo, quantity: number) : Promise<IProduct> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/product/`;
+export const getWholesaler = async (id: number) : Promise<IWholesaler> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}`;
+
+    const response = await fetch(url, {
+        method: 'GET'
+    });
+    const body = await response.json();
+    if (response.status === 200) {
+        return body;
+    }
+    else {
+        throw body;
+    }
+}
+
+export const addWholesaler = async (wholesalerInfo: IWholesalerInfo) : Promise<IWholesaler> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/`;
 
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify(
-            {
-                productInfo: productInfo,
-                quantity: quantity
-            }
-        )
+        body: JSON.stringify(wholesalerInfo)
     });
     const body = await response.json();
     if (response.status === 200) {
@@ -54,15 +49,15 @@ export const addProduct = async (productInfo: IProductInfo, quantity: number) : 
     }
 }
 
-export const updateProductInfo = async (id: number, productInfo: IProductInfo) : Promise<IProduct> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/product/${id}`;
+export const updateWholesalerInfo = async (id: number, wholesalerInfo: IWholesalerInfo) : Promise<IWholesaler> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}`;
 
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'PATCH',
-        body: JSON.stringify(productInfo)
+        body: JSON.stringify(wholesalerInfo)
     });
     const body = await response.json();
     if (response.status === 200) {
@@ -73,8 +68,8 @@ export const updateProductInfo = async (id: number, productInfo: IProductInfo) :
     }
 }
 
-export const deleteProduct = async (id: number) => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/product/${id}`;
+export const deleteWholesaler = async (id: number) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}`;
 
     const response = await fetch(url, {
         headers: {
