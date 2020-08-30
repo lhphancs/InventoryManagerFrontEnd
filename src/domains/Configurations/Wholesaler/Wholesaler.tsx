@@ -47,6 +47,7 @@ function Wholesaler(props: IWholesalerProps) {
 
     const searchWholesalerByUpc = (upc: string) => {
         // Do an api GetWholeSalerByUpc api call here
+        console.log("AAA");
     }
     
     return <div>

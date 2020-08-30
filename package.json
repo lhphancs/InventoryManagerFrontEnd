@@ -11,7 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
-    "material-table": "^1.67.1",
+    "material-table": "^1.69.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
