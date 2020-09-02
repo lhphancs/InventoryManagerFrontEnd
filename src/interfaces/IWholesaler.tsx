@@ -1,6 +1,9 @@
+import { IProduct } from "./IProduct";
+
 export interface IWholesaler {
     id: number;
     wholesalerInfo: IWholesalerInfo;
+    products: IProduct[];
 }
 
 export interface IWholesalerInfo {

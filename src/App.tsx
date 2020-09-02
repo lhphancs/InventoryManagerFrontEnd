@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { PathProduct, PathShelf, PathProductForm, PathWholesaler, PathWholesalerForm } from './paths';
+import { PathProduct, PathShelf, PathProductForm, PathWholesaler, PathWholesalerForm, PathWholesalerProducts } from './paths';
 import { Shelf } from './domains/Configurations/Shelf/Shelf';
 import Product from './domains/Configurations/Product/Product';
 import { makeStyles } from '@material-ui/core';
@@ -9,6 +9,7 @@ import GlobalMessages from './GlobalMessages';
 import ProductForm from './domains/Configurations/Product/ProductForm';
 import Wholesaler from './domains/Configurations/Wholesaler/Wholesaler';
 import WholesalerForm from './domains/Configurations/Wholesaler/WholesalerForm';
+import WholesalerProducts from './domains/Configurations/WholesalerProducts/WholesalerProducts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ export default function App() {
             <Route path={PathProduct}><Product /></Route>
             <Route path={PathWholesalerForm}><WholesalerForm /></Route>
             <Route path={PathWholesaler}><Wholesaler /></Route>
+            <Route path={PathWholesalerProducts}><WholesalerProducts /></Route>
             
             <Route path={PathShelf}><Shelf /></Route>
             <Route path="/"><Product /></Route>

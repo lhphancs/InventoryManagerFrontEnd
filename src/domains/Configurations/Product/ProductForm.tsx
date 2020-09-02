@@ -82,7 +82,7 @@ function ProductForm(props: IProductFormProps) {
     try {
       product = productId
                   ? await updateProductInfo(productId!, productInfo)
-                  : await addProduct(productInfo, 0)
+                  : await addProduct(productInfo, 0);
 
       props.clearAndAddSuccessMessage("Product saved successfully");
       history.push(`${PathProduct}/${product.id}`);

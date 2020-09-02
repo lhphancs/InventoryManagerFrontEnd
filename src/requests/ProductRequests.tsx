@@ -38,12 +38,7 @@ export const addProduct = async (productInfo: IProductInfo, quantity: number) : 
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify(
-            {
-                productInfo: productInfo,
-                quantity: quantity
-            }
-        )
+        body: JSON.stringify(productInfo)
     });
     const body = await response.json();
     if (response.status === 200) {
