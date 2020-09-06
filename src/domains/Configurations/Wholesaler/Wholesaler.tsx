@@ -21,20 +21,20 @@ function Wholesaler(props: IWholesalerProps) {
     const [wholesalers, setWholesalers] = React.useState<IWholesaler[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    useEffect( () => {
-        const initializeWholesalers = async () => {
-            setIsLoading(true);
-            try {
-                const Wholesalers = await getAllWholesalers();
-                setWholesalers(Wholesalers);
-            }
-            catch (e) {
-                props.clearAndAddErrorMessage(e.message);
-            }
-            setIsLoading(false);
-        };
-        initializeWholesalers();
+    const initializeWholesalers = async () => {
+        setIsLoading(true);
+        try {
+            const Wholesalers = await getAllWholesalers();
+            setWholesalers(Wholesalers);
+        }
+        catch (e) {
+            props.clearAndAddErrorMessage(e.message);
+        }
+        setIsLoading(false);
+    };
 
+    useEffect( () => {
+        initializeWholesalers();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , []);
 
@@ -48,7 +48,7 @@ function Wholesaler(props: IWholesalerProps) {
 
     const searchWholesalerByUpc = (upc: string) => {
         // Do an api GetWholeSalerByUpc api call here
-        console.log("AAA");
+        alert("Not implemented yet");
     }
     
     return <div>
@@ -62,10 +62,8 @@ function Wholesaler(props: IWholesalerProps) {
                 onRowDelete: (oldData: any) =>
                     new Promise( async (resolve, reject) => {
                     try {
-                        deleteWholesaler(oldData.id);
-                        const newWholesalers = [...wholesalers];
-                        newWholesalers.splice(wholesalers.indexOf(oldData), 1);
-                        setWholesalers(newWholesalers);
+                        await deleteWholesaler(oldData.id);
+                        await initializeWholesalers();
                         resolve();
                     }
                     catch (e) {

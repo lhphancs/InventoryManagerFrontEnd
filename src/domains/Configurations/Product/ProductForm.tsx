@@ -47,24 +47,24 @@ function ProductForm(props: IProductFormProps) {
   const [failedToLoadProduct, setFailedToLoadProduct] = React.useState<boolean>(false);
 
   useEffect( () => {
-      const initializeProduct = async () => {
-        if (id === 'new') {
-          return;
-        }
-        setIsLoading(true);
-        try {
-          const product = await getProduct(parseInt(id));
-          setProductId(product.id);
-          setProductInfo(product.productInfo);
-        }
-        catch (e) {
-          props.clearAndAddErrorMessage(e.message);
-          setFailedToLoadProduct(true);
-        }
-        setIsLoading(false);
-      };
-      initializeProduct();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    const initializeProduct = async () => {
+      if (id === 'new') {
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const product = await getProduct(parseInt(id));
+        setProductId(product.id);
+        setProductInfo(product.productInfo);
+      }
+      catch (e) {
+        props.clearAndAddErrorMessage(e.message);
+        setFailedToLoadProduct(true);
+      }
+      setIsLoading(false);
+    };
+    initializeProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   } , []);
 
   const handleProductInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,14 +78,11 @@ function ProductForm(props: IProductFormProps) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    var product: IProduct | undefined;
     try {
-      product = productId
-                  ? await updateProductInfo(productId!, productInfo)
-                  : await addProduct(productInfo, 0);
+      productId ? await updateProductInfo(productId!, productInfo) : await addProduct(productInfo, 0);
 
       props.clearAndAddSuccessMessage("Product saved successfully");
-      history.push(`${PathProduct}/${product.id}`);
+      history.push(`${PathProduct}`);
     } catch (e) {
       props.clearAndAddErrorMessage(e.message);
     }

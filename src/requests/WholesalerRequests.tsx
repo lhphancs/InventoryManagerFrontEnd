@@ -82,3 +82,34 @@ export const deleteWholesaler = async (id: number) => {
         throw body;
     }
 }
+
+export const wholesalerAddProducts = async (id: number, productIds: string[]) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/add-products`;
+    const response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(productIds)
+    });
+    if (response.status !== 200) {
+        const body = await response.json();
+        throw body;
+    }
+}
+
+export const wholesalerRemoveProducts = async (id: number, productIds: string[]) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/remove-products`;
+
+    const response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'DELETE',
+        body: JSON.stringify(productIds)
+    });
+    if (response.status !== 200) {
+        const body = await response.json();
+        throw body;
+    }
+}

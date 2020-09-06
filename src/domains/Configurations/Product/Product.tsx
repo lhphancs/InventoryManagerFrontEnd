@@ -19,18 +19,20 @@ function Product(props: IProductProps) {
 
     const [products, setProducts] = React.useState<IProduct[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
+
+    const initializeProducts = async () => {
+        setIsLoading(true);
+        try {
+            const products = await getAllProducts();
+            setProducts(products);
+        }
+        catch (e) {
+            props.clearAndAddErrorMessage(e.message);
+        }
+        setIsLoading(false);
+    };
+
     useEffect( () => {
-        const initializeProducts = async () => {
-            setIsLoading(true);
-            try {
-                const products = await getAllProducts();
-                setProducts(products);
-            }
-            catch (e) {
-                props.clearAndAddErrorMessage(e.message);
-            }
-            setIsLoading(false);
-        };
         initializeProducts();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,10 +55,8 @@ function Product(props: IProductProps) {
                 onRowDelete: (oldData: any) =>
                     new Promise( async (resolve, reject) => {
                     try {
-                        deleteProduct(oldData.id);
-                        const newProducts = [...products];
-                        newProducts.splice(products.indexOf(oldData), 1);
-                        setProducts(newProducts);
+                        await deleteProduct(oldData.id);
+                        await initializeProducts();
                         resolve();
                     }
                     catch (e) {

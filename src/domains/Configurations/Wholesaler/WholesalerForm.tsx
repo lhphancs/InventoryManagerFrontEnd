@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 import { TextField, makeStyles, CircularProgress, Button, Grid } from '@material-ui/core';
-import { IWholesalerInfo, IWholesaler } from '../../../interfaces/IWholesaler';
+import { IWholesalerInfo } from '../../../interfaces/IWholesaler';
 import { useParams, useHistory } from 'react-router';
 import { PathWholesaler } from '../../../paths';
 import { getWholesaler, updateWholesalerInfo, addWholesaler } from '../../../requests/WholesalerRequests';
@@ -75,11 +75,8 @@ function WholesalerForm(props: IWholesalerFormProps) {
   const handleSave = async () => {
     setIsLoading(true);
 
-    var wholesaler: IWholesaler | undefined;
     try {
-      wholesaler = wholesalerId
-                  ? await updateWholesalerInfo(wholesalerId!, wholesalerInfo)
-                  : await addWholesaler(wholesalerInfo)
+      wholesalerId ? await updateWholesalerInfo(wholesalerId!, wholesalerInfo) : await addWholesaler(wholesalerInfo)
 
       props.clearAndAddSuccessMessage("Wholesaler saved successfully");
       history.push(`${PathWholesaler}`);

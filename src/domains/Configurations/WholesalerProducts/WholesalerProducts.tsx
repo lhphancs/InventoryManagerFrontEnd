@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import MaterialTable, { Column } from 'material-table';
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { IWholesaler } from '../../../interfaces/IWholesaler';
-import { getWholesaler } from '../../../requests/WholesalerRequests';
+import { getWholesaler, wholesalerAddProducts, wholesalerRemoveProducts } from '../../../requests/WholesalerRequests';
 import { IProduct } from '../../../interfaces/IProduct';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -25,8 +25,7 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
 
     const [isLoading, setIsLoading] = React.useState(true);
 
-    useEffect( () => {
-        const initializeWholesalerProducts = async () => {
+    const initializeWholesalerProducts = async () => {
             setIsLoading(true);
             try {
                 const wholesaler = await getWholesaler(id);
@@ -42,8 +41,10 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
             }
             setIsLoading(false);
         };
-        initializeWholesalerProducts();
+        
 
+    useEffect( () => {
+        initializeWholesalerProducts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , []);
 
@@ -52,7 +53,33 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
         { title: 'Upc', field: 'productInfo.upc' }
     ];
 
-    const renderTables = () => {
+    const handleAdd = async (productIds: string[]) => {
+        setIsLoading(true);
+
+        try {
+            await wholesalerAddProducts(id, productIds);
+            await initializeWholesalerProducts();
+            props.clearAndAddSuccessMessage("Products added successfully");
+        } catch (e) {
+            props.clearAndAddErrorMessage(e.message);
+        }
+        setIsLoading(false);
+    }
+
+    const handleRemove = async (productIds: string[]) => {
+        setIsLoading(true);
+
+        try {
+            await wholesalerRemoveProducts(id, productIds);
+            await initializeWholesalerProducts();
+            props.clearAndAddSuccessMessage("Products removed successfully");
+        } catch (e) {
+            props.clearAndAddErrorMessage(e.message);
+        }
+        setIsLoading(false);
+    }
+
+    const tables = () => {
         return <Grid container spacing={3}>
             <Grid item xs={6}>
                 <MaterialTable
@@ -63,6 +90,13 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
                     options={{
                         selection: true
                     }}
+                    actions={[
+                        {
+                            tooltip: 'Remove All Selected Products',
+                            icon: 'delete',
+                            onClick: (_: any, data: any) => handleRemove(data.map( (x: IProduct) => x.productInfo.upc))
+                        }
+                    ]}
                 />
             </Grid>
             <Grid item xs={6}>
@@ -74,12 +108,18 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
                     options={{
                         selection: true
                     }}
+                    actions={[
+                        {
+                            tooltip: 'Add All Selected Products',
+                            icon: 'post_add',
+                            onClick: (_: any, data: any) => handleAdd(data.map( (x: IProduct) => x.productInfo.upc))
+                        }
+                    ]}
                 />
             </Grid>
-            
         </Grid>;
     }
-    return renderTables();
+    return tables();
 }
 
 const mapDispatchToProps = (dispatch: any) => {
