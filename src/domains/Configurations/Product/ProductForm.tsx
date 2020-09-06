@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
-import { TextField, makeStyles, InputAdornment, FormControlLabel, Checkbox, FormControl, Button, CircularProgress } from '@material-ui/core';
+import { TextField, makeStyles, InputAdornment, FormControlLabel, Checkbox, FormControl, Button, CircularProgress, Grid } from '@material-ui/core';
 import { IProductInfo, IProduct } from '../../../interfaces/IProduct';
 import { addProduct, getProduct, updateProductInfo } from '../../../requests/ProductRequests';
 import { useParams, useHistory } from 'react-router';
@@ -110,20 +110,27 @@ function ProductForm(props: IProductFormProps) {
     </div>
       
     <FormControl>
-        <FormControlLabel
-          control={<Checkbox checked={productInfo.requiresPadding} onChange={handleProductInfoCheckChange} name="requiresPadding" />}
-          label="Padding"
-        />
-        <FormControlLabel
-          control={<Checkbox checked={productInfo.requiresBubbleWrap} onChange={handleProductInfoCheckChange} name="requiresBubbleWrap" />}
-          label="Bubblewrap"
-        />
-        <FormControlLabel
-          control={<Checkbox checked={productInfo.requiresBox} onChange={handleProductInfoCheckChange} name="requiresBox" />}
-          label="Box"
-        />
-        <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
-      </FormControl>
+      <FormControlLabel
+        control={<Checkbox checked={productInfo.requiresPadding} onChange={handleProductInfoCheckChange} name="requiresPadding" />}
+        label="Padding"
+      />
+      <FormControlLabel
+        control={<Checkbox checked={productInfo.requiresBubbleWrap} onChange={handleProductInfoCheckChange} name="requiresBubbleWrap" />}
+        label="Bubblewrap"
+      />
+      <FormControlLabel
+        control={<Checkbox checked={productInfo.requiresBox} onChange={handleProductInfoCheckChange} name="requiresBox" />}
+        label="Box"
+      />
+    </FormControl>
+    <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <Button variant="contained" color='primary' onClick={() => history.push(PathProduct)}>Back</Button>
+        </Grid>
+        <Grid item xs={6}>
+          <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
+        </Grid>
+      </Grid>
   </form>;
 
   return isLoading ? <CircularProgress /> 

@@ -34,11 +34,11 @@ export default function App() {
           <GlobalMessages />
 
           <Switch>
-            <Route path={PathProductForm}><ProductForm /></Route>
-            <Route path={PathProduct}><Product /></Route>
-            <Route path={PathWholesalerForm}><WholesalerForm /></Route>
-            <Route path={PathWholesaler}><Wholesaler /></Route>
-            <Route path={PathWholesalerProducts}><WholesalerProducts /></Route>
+            <Route path={`${PathProductForm}/:id`}><ProductForm /></Route>
+            <Route path={`${PathProduct}`}><Product /></Route>
+            <Route path={`${PathWholesalerForm}/:id`}><WholesalerForm /></Route>
+            <Route path={`${PathWholesaler}`}><Wholesaler /></Route>
+            <Route path={`${PathWholesalerProducts}/:id`}><WholesalerProducts /></Route>
             
             <Route path={PathShelf}><Shelf /></Route>
             <Route path="/"><Product /></Route>

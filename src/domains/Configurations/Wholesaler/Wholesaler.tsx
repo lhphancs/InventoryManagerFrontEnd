@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import MaterialTable, { Column } from 'material-table';
 import { useHistory } from "react-router-dom";
 import { IWholesaler } from '../../../interfaces/IWholesaler';
-import { PathWholesaler } from '../../../paths';
+import { PathWholesaler, PathWholesalerProducts } from '../../../paths';
 import { getAllWholesalers, deleteWholesaler } from '../../../requests/WholesalerRequests';
 import WholesalerSearchByProductForm from './WholesalerSearchByProductForm';
 
@@ -43,6 +43,7 @@ function Wholesaler(props: IWholesalerProps) {
         { title: 'City', field: 'wholesalerInfo.address.city' },
         { title: 'street', field: 'wholesalerInfo.address.street' },
         { title: 'zipCode', field: 'wholesalerInfo.address.zipCode' },
+        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathWholesalerProducts}/${rowData.id}`}>View</a>}
     ];
 
     const searchWholesalerByUpc = (upc: string) => {

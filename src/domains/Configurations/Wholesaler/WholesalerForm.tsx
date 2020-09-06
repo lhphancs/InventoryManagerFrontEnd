@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
-import { TextField, makeStyles, CircularProgress, Button } from '@material-ui/core';
+import { TextField, makeStyles, CircularProgress, Button, Grid } from '@material-ui/core';
 import { IWholesalerInfo, IWholesaler } from '../../../interfaces/IWholesaler';
 import { useParams, useHistory } from 'react-router';
 import { PathWholesaler } from '../../../paths';
@@ -82,7 +82,7 @@ function WholesalerForm(props: IWholesalerFormProps) {
                   : await addWholesaler(wholesalerInfo)
 
       props.clearAndAddSuccessMessage("Wholesaler saved successfully");
-      history.push(`${PathWholesaler}/${wholesaler.id}`);
+      history.push(`${PathWholesaler}`);
     } catch (e) {
       props.clearAndAddErrorMessage(e.message);
     }
@@ -99,7 +99,14 @@ function WholesalerForm(props: IWholesalerFormProps) {
         <TextField label="City Location" value={wholesalerInfo.address.city} name="city" onChange={handleWholesalerInfoAddressChange} />
         <TextField label="Zipcode"value={wholesalerInfo.address.zipCode} name="zipCode" onChange={handleWholesalerInfoAddressChange} />
       </div>
-      <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <Button variant="contained" color='primary' onClick={() => history.push(PathWholesaler)}>Back</Button>
+        </Grid>
+        <Grid item xs={6}>
+          <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
+        </Grid>
+      </Grid>
     </div>
   </form>;
 

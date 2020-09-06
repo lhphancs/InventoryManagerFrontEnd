@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getAllProducts } from '../../../requests/ProductRequests';
+import { getAllProducts, deleteProduct } from '../../../requests/ProductRequests';
 import { clearAllGlobalMessage, clearAndAddErrorMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 import { IProduct } from '../../../interfaces/IProduct';
@@ -49,6 +49,22 @@ function Product(props: IProductProps) {
         data={products}
         columns={columns}
         isLoading={isLoading}
+        editable={{
+                onRowDelete: (oldData: any) =>
+                    new Promise( async (resolve, reject) => {
+                    try {
+                        deleteProduct(oldData.id);
+                        const newProducts = [...products];
+                        newProducts.splice(products.indexOf(oldData), 1);
+                        setProducts(newProducts);
+                        resolve();
+                    }
+                    catch (e) {
+                        props.clearAndAddErrorMessage(e.message);
+                        reject();
+                    }
+                })
+            }}
         actions={[
         {
           icon: 'add',

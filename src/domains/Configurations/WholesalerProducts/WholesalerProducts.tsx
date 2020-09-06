@@ -36,8 +36,6 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
                 const allProducts = await getAllProducts();
                 const filteredProducts = allProducts.filter(x => !wholesalerProductIds.includes(x.id));
                 setProductsNotInWholesaler(filteredProducts);
-                console.log(allProducts);
-                console.log(filteredProducts);
             }
             catch (e) {
                 props.clearAndAddErrorMessage(e.message);
@@ -51,7 +49,7 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
 
     const columns: Column<object>[] = [
         { title: 'Name', field: 'productInfo.name' },
-        { title: 'Upc', field: 'productInfo.upc' },
+        { title: 'Upc', field: 'productInfo.upc' }
     ];
 
     const renderTables = () => {
