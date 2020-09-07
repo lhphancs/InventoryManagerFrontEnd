@@ -1,22 +1,7 @@
-import { IWholesalerInfo, IWholesaler } from "../interfaces/IWholesaler";
+import { IShelf, IShelfLocation } from "../interfaces/IShelf";
 
-export const getAllWholesalers = async () : Promise<IWholesaler[]> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler`;
-
-    const response = await fetch(url, {
-        method: 'GET'
-    });
-    const body = await response.json();
-    if (response.status === 200) {
-        return body;
-    }
-    else {
-        throw body;
-    }
-}
-
-export const getWholesaler = async (id: number) : Promise<IWholesaler> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}`;
+export const getShelf = async (id: number) : Promise<IShelf> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}`;
 
     const response = await fetch(url, {
         method: 'GET'
@@ -30,15 +15,30 @@ export const getWholesaler = async (id: number) : Promise<IWholesaler> => {
     }
 }
 
-export const addWholesaler = async (wholesalerInfo: IWholesalerInfo) : Promise<IWholesaler> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/`;
+export const getAllShelfs = async () : Promise<IShelf[]> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf`;
+
+    const response = await fetch(url, {
+        method: 'GET'
+    });
+    const body = await response.json();
+    if (response.status === 200) {
+        return body;
+    }
+    else {
+        throw body;
+    }
+}
+
+export const addShelf = async (shelf: IShelf) : Promise<IShelf> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/`;
 
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify(wholesalerInfo)
+        body: JSON.stringify(shelf)
     });
     const body = await response.json();
     if (response.status === 200) {
@@ -49,15 +49,15 @@ export const addWholesaler = async (wholesalerInfo: IWholesalerInfo) : Promise<I
     }
 }
 
-export const updateWholesalerInfo = async (id: number, wholesalerInfo: IWholesalerInfo) : Promise<IWholesaler> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}`;
+export const updateShelf = async (id: number, shelf: IShelf) : Promise<IShelf> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}`;
 
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'PATCH',
-        body: JSON.stringify(wholesalerInfo)
+        body: JSON.stringify(shelf)
     });
     const body = await response.json();
     if (response.status === 200) {
@@ -68,8 +68,8 @@ export const updateWholesalerInfo = async (id: number, wholesalerInfo: IWholesal
     }
 }
 
-export const deleteWholesaler = async (id: number) => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}`;
+export const deleteShelf = async (id: number) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}`;
 
     const response = await fetch(url, {
         headers: {
@@ -83,14 +83,14 @@ export const deleteWholesaler = async (id: number) => {
     }
 }
 
-export const wholesalerAddProducts = async (id: number, productIds: string[]) => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/add-products`;
+export const shelfAddShelfLocation = async (id: number, shelfLocation: IShelfLocation) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}/add-shelf-location`;
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify(productIds)
+        body: JSON.stringify(shelfLocation)
     });
     if (response.status !== 200) {
         const body = await response.json();
@@ -98,8 +98,8 @@ export const wholesalerAddProducts = async (id: number, productIds: string[]) =>
     }
 }
 
-export const wholesalerDeleteProducts = async (id: number, productIds: string[]) => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/delete-products`;
+export const shelfDeleteShelfLocation = async (id: number, productIds: string[]) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/remove-products`;
 
     const response = await fetch(url, {
         headers: {

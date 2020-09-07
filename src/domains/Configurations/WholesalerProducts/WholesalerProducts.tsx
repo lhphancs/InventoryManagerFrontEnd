@@ -3,7 +3,7 @@ import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessa
 import MaterialTable, { Column } from 'material-table';
 import { useParams } from "react-router-dom";
 import { IWholesaler } from '../../../interfaces/IWholesaler';
-import { getWholesaler, wholesalerAddProducts, wholesalerRemoveProducts } from '../../../requests/WholesalerRequests';
+import { getWholesaler, wholesalerAddProducts, wholesalerDeleteProducts } from '../../../requests/WholesalerRequests';
 import { IProduct } from '../../../interfaces/IProduct';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -70,7 +70,7 @@ function WholesalerProducts(props: IWholesalerProductsProps) {
         setIsLoading(true);
 
         try {
-            await wholesalerRemoveProducts(id, productIds);
+            await wholesalerDeleteProducts(id, productIds);
             await initializeWholesalerProducts();
             props.clearAndAddSuccessMessage("Products removed successfully");
         } catch (e) {
