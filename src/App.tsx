@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { PathProduct, PathShelf, PathProductForm, PathWholesaler, PathWholesalerForm, PathWholesalerProducts } from './paths';
+import { PathProduct, PathWholesaler, PathWholesalerProducts, PathShelf } from './paths';
 import Product from './domains/Configurations/Product/Product';
 import { makeStyles } from '@material-ui/core';
 import SideNavigation from './SideNavigation';
@@ -10,6 +10,7 @@ import Wholesaler from './domains/Configurations/Wholesaler/Wholesaler';
 import WholesalerForm from './domains/Configurations/Wholesaler/WholesalerForm';
 import WholesalerProducts from './domains/Configurations/WholesalerProducts/WholesalerProducts';
 import Shelf from './domains/Configurations/Shelf/Shelf';
+import ShelfForm from './domains/Configurations/Shelf/ShelfForm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,12 +35,13 @@ export default function App() {
           <GlobalMessages />
 
           <Switch>
-            <Route path={`${PathProductForm}/:id`}><ProductForm /></Route>
+            <Route path={`${PathProduct}/:id`}><ProductForm /></Route>
             <Route path={`${PathProduct}`}><Product /></Route>
-            <Route path={`${PathWholesalerForm}/:id`}><WholesalerForm /></Route>
+            <Route path={`${PathWholesaler}/:id`}><WholesalerForm /></Route>
             <Route path={`${PathWholesaler}`}><Wholesaler /></Route>
             <Route path={`${PathWholesalerProducts}/:id`}><WholesalerProducts /></Route>
             
+            <Route path={`${PathShelf}/:id`}><ShelfForm /></Route>
             <Route path={PathShelf}><Shelf /></Route>
             <Route path="/"><Product /></Route>
           </Switch>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../../redux/reducer/globalMessagesReducer';
 import { connect } from 'react-redux';
 import { TextField, makeStyles, InputAdornment, FormControlLabel, Checkbox, FormControl, Button, CircularProgress, Grid } from '@material-ui/core';
-import { IProductInfo, IProduct } from '../../../interfaces/IProduct';
+import { IProductInfo } from '../../../interfaces/IProduct';
 import { addProduct, getProduct, updateProductInfo } from '../../../requests/ProductRequests';
 import { useParams, useHistory } from 'react-router';
 import { PathProduct } from '../../../paths';

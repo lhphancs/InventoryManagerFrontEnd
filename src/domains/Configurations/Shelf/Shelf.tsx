@@ -5,7 +5,7 @@ import MaterialTable, { Column } from 'material-table';
 import { useHistory } from "react-router-dom";
 import { getAllShelfs, deleteShelf } from '../../../requests/ShelfRequests';
 import { IShelf } from '../../../interfaces/IShelf';
-import { PathShelf, PathShelfLocations } from '../../../paths';
+import { PathShelf } from '../../../paths';
 
 interface IShelfProps {
     clearAllGlobalMessages: () => void;
@@ -17,14 +17,14 @@ function Shelf(props: IShelfProps) {
 
     const history = useHistory();
 
-    const [Shelfs, setShelfs] = React.useState<IShelf[]>([]);
+    const [shelfs, setShelfs] = React.useState<IShelf[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
     const initializeShelfs = async () => {
         setIsLoading(true);
         try {
-            const Shelfs = await getAllShelfs();
-            setShelfs(Shelfs);
+            const shelfs = await getAllShelfs();
+            setShelfs(shelfs);
         }
         catch (e) {
             props.clearAndAddErrorMessage(e.message);
@@ -38,21 +38,13 @@ function Shelf(props: IShelfProps) {
     } , []);
 
     const columns: Column<object>[] = [
-    { title: 'Name', field: 'ShelfInfo.name', render: (rowData: any) => <a href={`${PathShelf}/${rowData.id}`}>{rowData.ShelfInfo.name}</a>},
-        { title: 'City', field: 'ShelfInfo.address.city' },
-        { title: 'street', field: 'ShelfInfo.address.street' },
-        { title: 'zipCode', field: 'ShelfInfo.address.zipCode' },
-        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathShelfLocations}/${rowData.id}`}>View</a>}
+    { title: 'Name', field: 'shelfInfo.name', render: (rowData: any) => <a href={`${PathShelf}/${rowData.id}`}>{rowData.shelfInfo.name}</a>},
+        { title: 'Description', field: 'shelfInfo.description' },
     ];
 
-    const searchShelfByUpc = (upc: string) => {
-        // Do an api GetShelfByUpc api call here
-        alert("Not implemented yet");
-    }
-    
     return <div>
         <MaterialTable
-            data={Shelfs}
+            data={shelfs}
             columns={columns}
             isLoading={isLoading}
             editable={{
@@ -72,7 +64,7 @@ function Shelf(props: IShelfProps) {
             actions={[
                 {
                 icon: 'add',
-                tooltip: 'Add User',
+                tooltip: 'Add Shelf',
                 isFreeAction: true,
                 onClick: (_) => history.push(`${PathShelf}/new`)
                 }

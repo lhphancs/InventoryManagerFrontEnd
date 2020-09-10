@@ -1,4 +1,4 @@
-import { IShelf, IShelfLocation } from "../interfaces/IShelf";
+import { IShelf, IShelfLocation, IShelfInfo } from "../interfaces/IShelf";
 
 export const getShelf = async (id: number) : Promise<IShelf> => {
     const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}`;
@@ -30,15 +30,15 @@ export const getAllShelfs = async () : Promise<IShelf[]> => {
     }
 }
 
-export const addShelf = async (shelf: IShelf) : Promise<IShelf> => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/`;
+export const addShelf = async (shelfInfo: IShelfInfo) : Promise<IShelf> => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf`;
 
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify(shelf)
+        body: JSON.stringify(shelfInfo)
     });
     const body = await response.json();
     if (response.status === 200) {
@@ -49,7 +49,7 @@ export const addShelf = async (shelf: IShelf) : Promise<IShelf> => {
     }
 }
 
-export const updateShelf = async (id: number, shelf: IShelf) : Promise<IShelf> => {
+export const updateShelf = async (id: number, shelfInfo: IShelfInfo) : Promise<IShelf> => {
     const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}`;
 
     const response = await fetch(url, {
@@ -57,7 +57,7 @@ export const updateShelf = async (id: number, shelf: IShelf) : Promise<IShelf> =
             'Content-Type': 'application/json'
         },
         method: 'PATCH',
-        body: JSON.stringify(shelf)
+        body: JSON.stringify(shelfInfo)
     });
     const body = await response.json();
     if (response.status === 200) {

@@ -3,8 +3,8 @@ import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessa
 import { connect } from 'react-redux';
 import { TextField, makeStyles, CircularProgress, Button, Grid } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router';
-import { IShelf, IShelfInfo } from '../../../interfaces/IShelf';
-import { getShelf } from '../../../requests/ShelfRequests';
+import { IShelfInfo } from '../../../interfaces/IShelf';
+import { getShelf, updateShelf, addShelf } from '../../../requests/ShelfRequests';
 import { PathShelf } from '../../../paths';
 
 interface IShelfFormProps {
@@ -68,7 +68,7 @@ function ShelfForm(props: IShelfFormProps) {
     setIsLoading(true);
 
     try {
-      shelfId ? await updateShelf(shelfId!, ShelfInfo) : await addShelf(ShelfInfo)
+      shelfId ? await updateShelf(shelfId, shelfInfo) : await addShelf(shelfInfo)
 
       props.clearAndAddSuccessMessage("Shelf saved successfully");
       history.push(`${PathShelf}`);
