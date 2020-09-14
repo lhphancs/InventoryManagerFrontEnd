@@ -75,7 +75,7 @@ function Wholesaler(props: IWholesalerProps) {
             actions={[
                 {
                 icon: 'add',
-                tooltip: 'Add User',
+                tooltip: 'Add Wholesaler',
                 isFreeAction: true,
                 onClick: (_) => history.push(`${PathWholesaler}/new`)
                 }

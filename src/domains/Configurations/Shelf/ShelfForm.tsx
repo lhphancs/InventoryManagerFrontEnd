@@ -82,7 +82,7 @@ function ShelfForm(props: IShelfFormProps) {
     <div>
       <div>
         <TextField label="Name" required value={shelfInfo.name} name="name" onChange={handleShelfChange} />
-        <TextField label="Description" required value={shelfInfo.description} name="description" onChange={handleShelfChange} />
+        <TextField label="Description" value={shelfInfo.description} name="description" onChange={handleShelfChange} />
       </div>
       <Grid container spacing={3}>
         <Grid item xs={6}>
