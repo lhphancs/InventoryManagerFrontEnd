@@ -121,13 +121,13 @@ function ProductForm(props: IProductFormProps) {
       />
     </FormControl>
     <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <Button variant="contained" color='primary' onClick={() => history.push(PathProduct)}>Back</Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
-        </Grid>
+      <Grid item xs={6}>
+        <Button variant="contained" color='primary' onClick={() => history.push(PathProduct)}>Back</Button>
       </Grid>
+      <Grid item xs={6}>
+        <Button variant="contained" color='primary' onClick={handleSave}>Save</Button>
+      </Grid>
+    </Grid>
   </form>;
 
   return isLoading ? <CircularProgress /> 
