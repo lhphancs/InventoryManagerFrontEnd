@@ -1,7 +1,9 @@
+import { IProduct } from "./IProduct";
+
 export interface IShelf {
     id: number;
     shelfInfo: IShelfInfo;
-    shelfLocations: IShelfLocation[]
+    shelfProducts: IShelfProduct[]
 }
 
 export interface IShelfInfo {
@@ -9,8 +11,10 @@ export interface IShelfInfo {
     description: string;
 }
 
-export interface IShelfLocation {
-    id: string;
+export interface IShelfProduct {
+    id: number;
+    productId: string;
     row: number;
     position: number;
+    product: IProduct;
 }

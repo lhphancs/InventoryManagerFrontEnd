@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
 
-function ShelfLocation() {
+function ShelfProduct() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (_: React.ChangeEvent<{}>, newValue: any) => {
@@ -16,4 +16,4 @@ function ShelfLocation() {
     </AppBar>;
 }
 
-export default ShelfLocation;
+export default ShelfProduct;

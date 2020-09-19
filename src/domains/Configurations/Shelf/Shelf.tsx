@@ -5,7 +5,7 @@ import MaterialTable, { Column } from 'material-table';
 import { useHistory } from "react-router-dom";
 import { getAllShelfs, deleteShelf } from '../../../requests/ShelfRequests';
 import { IShelf } from '../../../interfaces/IShelf';
-import { PathShelf, PathShelfLocations } from '../../../paths';
+import { PathShelf, PathShelfProducts } from '../../../paths';
 
 interface IShelfProps {
     clearAllGlobalMessages: () => void;
@@ -40,7 +40,7 @@ function Shelf(props: IShelfProps) {
     const columns: Column<object>[] = [
         { title: 'Name', field: 'shelfInfo.name', render: (rowData: any) => <a href={`${PathShelf}/${rowData.id}`}>{rowData.shelfInfo.name}</a>},
         { title: 'Description', field: 'shelfInfo.description' },
-        { title: 'Locations', field: '', render: (rowData: any) => <a href={`${PathShelfLocations}/${rowData.id}`}>View</a>}
+        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathShelfProducts}/${rowData.id}`}>View</a>}
     ];
 
     return <div>

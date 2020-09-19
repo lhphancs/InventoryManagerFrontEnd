@@ -2,7 +2,7 @@ export interface IProduct {
     id: number;
     productInfo: IProductInfo;
     quantity: number;
-    shelfLocationId: string
+    shelfProductId: string
 }
 
 export interface IProductInfo {

@@ -1,4 +1,4 @@
-import { IShelf, IShelfLocation, IShelfInfo } from "../interfaces/IShelf";
+import { IShelf, IShelfProduct, IShelfInfo } from "../interfaces/IShelf";
 
 export const getShelf = async (id: number) : Promise<IShelf> => {
     const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}`;
@@ -83,14 +83,14 @@ export const deleteShelf = async (id: number) => {
     }
 }
 
-export const shelfAddShelfLocation = async (id: number, shelfLocation: IShelfLocation) => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}/add-shelf-location`;
+export const shelfAddShelfProduct = async (id: number, shelfProduct: IShelfProduct) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/shelf/${id}/add-shelf-product`;
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify(shelfLocation)
+        body: JSON.stringify(shelfProduct)
     });
     if (response.status !== 200) {
         const body = await response.json();
@@ -98,8 +98,8 @@ export const shelfAddShelfLocation = async (id: number, shelfLocation: IShelfLoc
     }
 }
 
-export const shelfDeleteShelfLocation = async (id: number, productIds: string[]) => {
-    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/remove-products`;
+export const shelfDeleteShelfProduct = async (id: number, productIds: string[]) => {
+    const url = `${process.env.REACT_APP_INVENTORY_MANAGER_API_URL}/wholesaler/${id}/remove-productsaaaaaa`;
 
     const response = await fetch(url, {
         headers: {

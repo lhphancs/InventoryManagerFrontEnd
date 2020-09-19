@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { PathProduct, PathWholesaler, PathWholesalerProducts, PathShelf, PathShelfLocations } from './paths';
+import { PathProduct, PathWholesaler, PathWholesalerProducts, PathShelf, PathShelfProducts } from './paths';
 import Product from './domains/Configurations/Product/Product';
 import { makeStyles } from '@material-ui/core';
 import SideNavigation from './SideNavigation';
@@ -11,7 +11,7 @@ import WholesalerForm from './domains/Configurations/Wholesaler/WholesalerForm';
 import WholesalerProducts from './domains/Configurations/WholesalerProducts/WholesalerProducts';
 import Shelf from './domains/Configurations/Shelf/Shelf';
 import ShelfForm from './domains/Configurations/Shelf/ShelfForm';
-import ShelfLocation from './domains/ShelfLocation/ShelfLocation';
+import ShelfProduct from './domains/ShelfProduct/ShelfProduct';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +45,7 @@ export default function App() {
             <Route path={`${PathShelf}/:id`}><ShelfForm /></Route>
             <Route path={PathShelf}><Shelf /></Route>
 
-            <Route path={`${PathShelfLocations}/:id`}><ShelfLocation /></Route>
+            <Route path={`${PathShelfProducts}/:id`}><ShelfProduct /></Route>
 
             <Route path="/"><Product /></Route>
           </Switch>
