@@ -13,7 +13,7 @@ export function NumberFormatCustom(props: any) {
         onChange({
           target: {
             name: props.name,
-            value: values.value,
+            value: parseFloat(values.value),
           },
         });
       }}

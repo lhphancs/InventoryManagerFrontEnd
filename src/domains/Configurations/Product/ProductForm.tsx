@@ -6,6 +6,7 @@ import { IProductInfo } from '../../../interfaces/IProduct';
 import { addProduct, getProduct, updateProductInfo } from '../../../requests/ProductRequests';
 import { useParams, useHistory } from 'react-router';
 import { PathProduct } from '../../../paths';
+import { NumberFormatCustom } from '../../components/NumberFormat';
 
 interface IProductFormProps {
     clearAllGlobalMessages: () => void;
@@ -101,8 +102,10 @@ function ProductForm(props: IProductFormProps) {
         <TextField label="Expiration Location" value={productInfo.expirationLocation} name="expirationLocation" onChange={handleProductInfoChange} />
         <TextField label="Weight" type="number" value={productInfo.ounceWeight} name="ounceWeight" onChange={handleProductInfoChange} 
           InputProps={{
-          endAdornment: <InputAdornment position="end">Oz</InputAdornment>,
-        }}/>
+            inputComponent: NumberFormatCustom,
+            endAdornment: <InputAdornment position="end">Oz</InputAdornment>
+          }}
+          />
       </div>
     </div>
       
