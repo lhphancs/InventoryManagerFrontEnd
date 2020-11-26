@@ -2,12 +2,12 @@ import { CircularProgress, Grid } from '@material-ui/core';
 import MaterialTable, { Column } from 'material-table';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { IProduct } from '../../interfaces/IProduct';
 import { IShelf } from '../../interfaces/IShelf';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../redux/reducer/globalMessagesReducer';
 import { getShelf } from '../../requests/ShelfRequests';
-import ShelfProductAddDialog from './ShelfProductAddDialog';
+import ShelfProductAddForm from './ShelfProductAddForm';
 
 interface IShelfProductProps {
     clearAllGlobalMessages: () => void;
@@ -20,7 +20,7 @@ function ShelfProduct(props: IShelfProductProps) {
     
     const [shelf, setShelf] = React.useState<IShelf>();
     const [isLoading, setIsLoading] = React.useState(true);
-    const [productForModal, setProductForModal] = React.useState<IProduct | undefined>(undefined);
+    const [displayAddShelfProductForm, setDisplayAddShelfProductForm] = React.useState<boolean>(false);
 
     const initializeShelf = async () => {
         setIsLoading(true);
@@ -45,18 +45,17 @@ function ShelfProduct(props: IShelfProductProps) {
         { title: 'Upc', field: 'productInfo.upc' }
     ];
 
-    const handleAdd = (product: IProduct) => {
-        setProductForModal(product);
-    }
-
     const renderShelf = () => {
-        console.log(shelf);
         return <div>
             Display Shelf, and it's products here
         </div>;
     }
 
     const renderPage = () => {
+        if (displayAddShelfProductForm) {
+            return <ShelfProductAddForm setDisplayAddShelfProductForm={setDisplayAddShelfProductForm} />;
+        }
+
         const table = <Grid container spacing={3}>
             <Grid item xs={3}>
                 {renderShelf()}
@@ -69,15 +68,14 @@ function ShelfProduct(props: IShelfProductProps) {
                     isLoading={isLoading}
                     actions={[
                         {
-                        icon: 'add',
-                        tooltip: 'Add Product',
-                        isFreeAction: true,
-                        onClick: (_: any, data: any) => handleAdd(data)
+                            icon: 'add',
+                            tooltip: 'Add Product',
+                            isFreeAction: true,
+                            onClick: (_: any, data: any) => setDisplayAddShelfProductForm(true)
                         }
                     ]}
                 />
             </Grid>
-            <ShelfProductAddDialog product={productForModal} onClose={() => setProductForModal(undefined)} />
         </Grid>;
         return table;
     }

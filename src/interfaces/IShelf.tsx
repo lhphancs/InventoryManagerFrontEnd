@@ -16,5 +16,5 @@ export interface IShelfProduct {
     productId: string;
     row: number;
     position: number;
-    product: IProduct;
+    product?: IProduct;
 }
