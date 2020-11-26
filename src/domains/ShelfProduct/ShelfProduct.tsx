@@ -1,10 +1,12 @@
-import { Grid } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import MaterialTable, { Column } from 'material-table';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory, useParams } from 'react-router';
 import { IProduct } from '../../interfaces/IProduct';
+import { IShelf } from '../../interfaces/IShelf';
 import { clearAllGlobalMessage, clearAndAddErrorMessage, clearAndAddSuccessMessage } from '../../redux/reducer/globalMessagesReducer';
-import { getAllProducts } from '../../requests/ProductRequests';
+import { getShelf } from '../../requests/ShelfRequests';
 import ShelfProductAddDialog from './ShelfProductAddDialog';
 
 interface IShelfProductProps {
@@ -13,15 +15,18 @@ interface IShelfProductProps {
 }
 
 function ShelfProduct(props: IShelfProductProps) {
-    const [products, setProducts] = React.useState<IProduct[]>([]);
+    let { id } = useParams();
+    props.clearAllGlobalMessages();
+    
+    const [shelf, setShelf] = React.useState<IShelf>();
     const [isLoading, setIsLoading] = React.useState(true);
     const [productForModal, setProductForModal] = React.useState<IProduct | undefined>(undefined);
 
-    const initializeProducts = async () => {
+    const initializeShelf = async () => {
         setIsLoading(true);
         try {
-            const products = await getAllProducts();
-            setProducts(products);
+            const shelf = await getShelf(id);
+            setShelf(shelf);
         }
         catch (e) {
             props.clearAndAddErrorMessage(e.message);
@@ -30,7 +35,7 @@ function ShelfProduct(props: IShelfProductProps) {
     };
 
     useEffect( () => {
-        initializeProducts();
+        initializeShelf();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , []);
@@ -43,31 +48,41 @@ function ShelfProduct(props: IShelfProductProps) {
     const handleAdd = (product: IProduct) => {
         setProductForModal(product);
     }
-    
-    return <Grid container spacing={3}>
-      <Grid item xs={3}>
-        <div>
+
+    const renderShelf = () => {
+        console.log(shelf);
+        return <div>
             Display Shelf, and it's products here
-        </div>
-      </Grid>
-      <Grid item xs={9}>
-        <MaterialTable
-            title='Products'
-            data={products}
-            columns={columns}
-            isLoading={isLoading}
-            actions={[
-                {
-                icon: 'add',
-                tooltip: 'Add Product',
-                isFreeAction: true,
-                onClick: (_: any, data: any) => handleAdd(data)
-                }
-            ]}
-        />
-      </Grid>
-      <ShelfProductAddDialog product={productForModal} onClose={() => setProductForModal(undefined)} />
-    </Grid>;
+        </div>;
+    }
+
+    const renderPage = () => {
+        const table = <Grid container spacing={3}>
+            <Grid item xs={3}>
+                {renderShelf()}
+            </Grid>
+            <Grid item xs={9}>
+                <MaterialTable
+                    title='Products'
+                    data={shelf!.shelfProducts}
+                    columns={columns}
+                    isLoading={isLoading}
+                    actions={[
+                        {
+                        icon: 'add',
+                        tooltip: 'Add Product',
+                        isFreeAction: true,
+                        onClick: (_: any, data: any) => handleAdd(data)
+                        }
+                    ]}
+                />
+            </Grid>
+            <ShelfProductAddDialog product={productForModal} onClose={() => setProductForModal(undefined)} />
+        </Grid>;
+        return table;
+    }
+    
+    return isLoading ? <CircularProgress /> : renderPage();
 }
 
 const mapDispatchToProps = (dispatch: any) => {

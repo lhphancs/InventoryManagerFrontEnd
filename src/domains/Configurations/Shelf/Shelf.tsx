@@ -40,7 +40,7 @@ function Shelf(props: IShelfProps) {
     const columns: Column<object>[] = [
         { title: 'Name', field: 'shelfInfo.name', render: (rowData: any) => <a href={`${PathShelf}/${rowData.id}`}>{rowData.shelfInfo.name}</a>},
         { title: 'Description', field: 'shelfInfo.description' },
-        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathShelfProducts}/${rowData.id}`}>View</a>}
+        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathShelfProducts}/${rowData.id}`}>Modify</a>}
     ];
 
     return <div>
