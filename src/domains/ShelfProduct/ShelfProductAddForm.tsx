@@ -23,7 +23,7 @@ export default function ShelfProductAddForm(props: ShelfProductAddFormProps) {
             id: -1,
             productId: "",
             row: 0,
-            position: 0,
+            column: 0,
         };
     }
     const classes = useStyles();
@@ -47,9 +47,9 @@ export default function ShelfProductAddForm(props: ShelfProductAddFormProps) {
                             inputComponent: NumberFormatCustom
                         }}
                         type='number'/>
-                    <TextField label="Position"
-                        value={shelfProduct!.position}
-                        name="position"
+                    <TextField label="Column"
+                        value={shelfProduct!.column}
+                        name="column"
                         onChange={handleShelfProductChange}
                         InputProps={{
                             inputComponent: NumberFormatCustom
