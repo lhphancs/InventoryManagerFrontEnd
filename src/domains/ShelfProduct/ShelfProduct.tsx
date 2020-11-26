@@ -58,9 +58,10 @@ function ShelfProduct(props: IShelfProductProps) {
             isLoading={isLoading}
             actions={[
                 {
-                    tooltip: 'Add Product',
-                    icon: 'post_add',
-                    onClick: (_: any, data: any) => handleAdd(data)
+                icon: 'add',
+                tooltip: 'Add Product',
+                isFreeAction: true,
+                onClick: (_: any, data: any) => handleAdd(data)
                 }
             ]}
         />

@@ -43,7 +43,7 @@ function Wholesaler(props: IWholesalerProps) {
         { title: 'City', field: 'wholesalerInfo.address.city' },
         { title: 'street', field: 'wholesalerInfo.address.street' },
         { title: 'zipCode', field: 'wholesalerInfo.address.zipCode' },
-        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathWholesalerProducts}/${rowData.id}`}>View</a>}
+        { title: 'Products', field: '', render: (rowData: any) => <a href={`${PathWholesalerProducts}/${rowData.id}`}>Modify</a>}
     ];
 
     const searchWholesalerByUpc = (upc: string) => {
@@ -74,10 +74,10 @@ function Wholesaler(props: IWholesalerProps) {
             }}
             actions={[
                 {
-                icon: 'add',
-                tooltip: 'Add Wholesaler',
-                isFreeAction: true,
-                onClick: (_) => history.push(`${PathWholesaler}/new`)
+                    icon: 'add',
+                    tooltip: 'Add Wholesaler',
+                    isFreeAction: true,
+                    onClick: (_) => history.push(`${PathWholesaler}/new`)
                 }
             ]}
             />
