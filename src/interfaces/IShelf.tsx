@@ -1,5 +1,3 @@
-import { IProduct } from "./IProduct";
-
 export interface IShelf {
     id: number;
     shelfInfo: IShelfInfo;
@@ -13,8 +11,7 @@ export interface IShelfInfo {
 
 export interface IShelfProduct {
     id: number;
-    productId: string;
     row: number;
     column: number;
-    product?: IProduct;
+    productId: string;
 }
